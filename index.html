@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Human Code Ai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              human: {
+                bg: '#020617',     /* Slate 950 */
+                card: '#0f172a',   /* Slate 900 */
+                cardHover: '#1e293b', /* Slate 800 */
+                text: '#f8fafc',   /* Slate 50 */
+                muted: '#94a3b8',  /* Slate 400 */
+                border: '#1e293b', /* Slate 800 */
+                accent: '#818cf8', /* Indigo 400 */
+                accentHover: '#6366f1', /* Indigo 500 */
+                accentGlow: 'rgba(129, 140, 248, 0.25)',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.6s ease-out forwards',
+              'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+              'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'float': 'float 20s ease-in-out infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translate(0, 0)' },
+                '50%': { transform: 'translate(-10px, -20px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+      body {
+        /* Deep, rich gradient base for premium feel */
+        background: radial-gradient(circle at 50% -20%, #1e1b4b 0%, #020617 80%);
+        background-color: #020617;
+        background-attachment: fixed;
+        color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        margin: 0;
+      }
+      
+      /* Dynamic Ambient Variables - Defaults */
+      :root {
+        --orb-1-fill: rgba(99, 102, 241, 0.25); /* Indigo */
+        --orb-2-fill: rgba(45, 212, 191, 0.2); /* Teal */
+        --orb-3-fill: rgba(244, 114, 182, 0.15); /* Rose */
+        --mouse-x: 0;
+        --mouse-y: 0;
+      }
+      
+      /* Background Container */
+      .ambient-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: -1;
+        pointer-events: none;
+      }
+
+      /* Wrapper handles the floating animation */
+      .orb-wrapper {
+        position: absolute;
+        will-change: transform;
+      }
+
+      .w-1 {
+        top: -10%; left: -10%; 
+        width: 70vw; height: 70vw;
+        animation: floatMove1 25s infinite alternate;
+      }
+
+      .w-2 {
+        bottom: -20%; right: -10%; 
+        width: 60vw; height: 60vw;
+        animation: floatMove2 35s infinite alternate;
+      }
+
+      .w-3 {
+        top: 40%; left: 40%; 
+        width: 45vw; height: 45vw;
+        animation: floatPulse 20s infinite alternate;
+      }
+
+      /* Inner Orb handles Gradient + Mouse Parallax */
+      .bg-orb {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        filter: blur(90px); /* Increased blur for smoother blending */
+        transition: background 4s ease-in-out, transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        mix-blend-mode: screen; /* Makes colors pop against dark background */
+      }
+
+      /* Orb 1: Primary Depth - Parallax moves opposite to mouse */
+      .orb-1 {
+        background: radial-gradient(circle, var(--orb-1-fill) 0%, transparent 65%); 
+        transform: translate(calc(var(--mouse-x) * -40px), calc(var(--mouse-y) * -40px));
+      }
+
+      /* Orb 2: Secondary Accent - Moves with mouse */
+      .orb-2 {
+        background: radial-gradient(circle, var(--orb-2-fill) 0%, transparent 65%);
+        transform: translate(calc(var(--mouse-x) * 30px), calc(var(--mouse-y) * 30px));
+      }
+
+      /* Orb 3: Warmth - Subtle movement */
+      .orb-3 {
+        background: radial-gradient(circle, var(--orb-3-fill) 0%, transparent 65%);
+        transform: translate(calc(var(--mouse-x) * 20px), calc(var(--mouse-y) * 20px));
+      }
+
+      @keyframes floatMove1 {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(5%, 10%) scale(1.1); }
+      }
+
+      @keyframes floatMove2 {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(-10%, -5%) scale(0.95); }
+      }
+
+      @keyframes floatPulse {
+        0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+        100% { transform: translate(-40%, -60%) scale(1.1); opacity: 1; }
+      }
+
+      /* Refined Noise Texture */
+      .noise-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.04; 
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0; 
+        mix-blend-mode: overlay;
+      }
+
+      /* Clean Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155; 
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569; 
+      }
+
+      /* Utility */
+      .glass-panel {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      
+      #root {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.39.0",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "recharts": "https://esm.sh/recharts@^3.7.0"
+      }
+    }
+    </script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div class="ambient-background">
+      <div class="orb-wrapper w-1"><div class="bg-orb orb-1"></div></div>
+      <div class="orb-wrapper w-2"><div class="bg-orb orb-2"></div></div>
+      <div class="orb-wrapper w-3"><div class="bg-orb orb-3"></div></div>
+    </div>
+    <div class="noise-overlay"></div>
+    
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
